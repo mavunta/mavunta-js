@@ -24,9 +24,10 @@ jobs:
           registry-url: https://registry.npmjs.org
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      # Build first: the bridge/react packages typecheck against built dist types.
+      - run: pnpm build
       - run: pnpm typecheck
       - run: pnpm test
-      - run: pnpm build
       # Publishes any package whose version is not yet on the registry, in
       # dependency order. pnpm rewrites workspace: ranges to real versions.
       - run: pnpm -r publish --access public --no-git-checks --provenance
