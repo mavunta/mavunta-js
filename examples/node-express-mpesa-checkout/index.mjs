@@ -16,7 +16,9 @@ app.post('/checkout', express.json(), async (req, res) => {
     customer: { email: req.body.email, phone: req.body.phone },
     metadata: { orderId: req.body.orderId },
   })
-  res.json({ checkoutUrl: intent.checkout_url })
+  // checkoutUrl for a plain redirect; paymentIntentId for @coinwaka/checkout-js
+  // (see ../browser-checkout).
+  res.json({ paymentIntentId: intent.id, checkoutUrl: intent.checkout_url })
 })
 
 // 2) Confirm the result with a signed webhook (raw body!).

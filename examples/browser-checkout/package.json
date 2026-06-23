@@ -1,0 +1,9 @@
+{
+  "name": "example-browser-checkout",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Zero-build static checkout page using the @coinwaka/checkout-js CDN global.",
+  "scripts": {
+    "start": "npx --yes serve ."
+  }
+}

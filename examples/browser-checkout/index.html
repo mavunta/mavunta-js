@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Coinwaka Pay — browser checkout</title>
+    <!--
+      The @coinwaka/checkout-js UMD/IIFE build exposes a global `Coinwaka`.
+      No bundler needed. Pin a version in production, e.g.
+      https://unpkg.com/@coinwaka/checkout-js@1.0.0
+    -->
+    <script src="https://unpkg.com/@coinwaka/checkout-js"></script>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        display: grid;
+        place-items: center;
+        min-height: 100vh;
+        margin: 0;
+        background: #0b0b0f;
+        color: #f4f4f5;
+      }
+      main {
+        text-align: center;
+        max-width: 22rem;
+      }
+      button {
+        font: inherit;
+        font-weight: 600;
+        padding: 0.85rem 1.5rem;
+        border: 0;
+        border-radius: 10px;
+        background: #f5b800;
+        color: #1a1a1a;
+        cursor: pointer;
+      }
+      button:disabled {
+        opacity: 0.6;
+        cursor: default;
+      }
+      p {
+        min-height: 1.25rem;
+        color: #a1a1aa;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Pay KES 2,500</h1>
+      <button id="pay">Pay with Coinwaka</button>
+      <p id="status"></p>
+    </main>
+
+    <script>
+      // 1) Your PUBLISHABLE key — safe to ship in the browser.
+      const PUBLIC_KEY = 'cwk_test_pk_REPLACE_ME'
+      // 2) Your backend endpoint that creates a payment intent with the SECRET
+      //    key. See ../node-express-mpesa-checkout (returns { paymentIntentId }).
+      const CREATE_INTENT_URL = 'http://localhost:3000/checkout'
+
+      const button = document.getElementById('pay')
+      const statusEl = document.getElementById('status')
+
+      button.addEventListener('click', async () => {
+        button.disabled = true
+        statusEl.textContent = 'Starting checkout…'
+        try {
+          // Ask YOUR server to create the intent (secret key never touches the browser).
+          const res = await fetch(CREATE_INTENT_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ amount: '2500', email: 'buyer@example.com' }),
+          })
+          if (!res.ok) throw new Error('Your server could not create the intent')
+          const { paymentIntentId } = await res.json()
+
+          // Load checkout with the publishable key and redirect to hosted checkout.
+          const checkout = await Coinwaka.loadCoinwaka(PUBLIC_KEY)
+          await checkout.redirectToCheckout({ paymentIntentId })
+          // The browser navigates away here; success is confirmed server-side
+          // via a signed webhook (see the Node example).
+        } catch (err) {
+          statusEl.textContent = 'Could not start checkout: ' + (err && err.message ? err.message : err)
+          button.disabled = false
+        }
+      })
+    </script>
+  </body>
+</html>
