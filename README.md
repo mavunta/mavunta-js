@@ -8,6 +8,7 @@ The official Coinwaka developer SDKs for JavaScript and TypeScript.
 | [`coinwaka`](packages/coinwaka) | Thin bridge so `npm install coinwaka` works (re-exports `@coinwaka/sdk`) | ✅ Phase 1 |
 | [`@coinwaka/checkout-js`](packages/checkout-js) | Browser checkout: redirect to hosted checkout + poll status with a publishable key | ✅ Phase 2 |
 | [`@coinwaka/react`](packages/react) | React components/hooks around checkout (`CoinwakaCheckoutButton`, `useCoinwakaCheckout`, `useCoinwakaPaymentStatus`) | ✅ Phase 3 |
+| [`@coinwaka/cli`](packages/cli) | CLI: verify keys, trigger sandbox webhooks, and `listen` to forward live events to localhost | ✅ Phase 4 |
 
 Server keys (`sk_` / `rk_`) belong on the backend; browser code will use a public key via `@coinwaka/checkout-js`.
 

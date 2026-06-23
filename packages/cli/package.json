@@ -1,0 +1,52 @@
+{
+  "name": "@coinwaka/cli",
+  "version": "1.0.0",
+  "description": "Coinwaka Pay command-line tools: verify keys, trigger sandbox webhooks, and forward live events to your local server for webhook testing.",
+  "license": "MIT",
+  "author": "Chainwaka Technologies",
+  "homepage": "https://developers.coinwaka.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coinwaka/coinwaka-js.git",
+    "directory": "packages/cli"
+  },
+  "bugs": {
+    "url": "https://github.com/coinwaka/coinwaka-js/issues"
+  },
+  "keywords": [
+    "coinwaka",
+    "coinwaka-pay",
+    "cli",
+    "webhooks",
+    "mpesa",
+    "kenya",
+    "payments"
+  ],
+  "type": "module",
+  "bin": {
+    "coinwaka": "./bin/coinwaka.mjs"
+  },
+  "files": [
+    "bin",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "clean": "rimraf dist",
+    "typecheck": "node --check bin/coinwaka.mjs",
+    "build": "node --check bin/coinwaka.mjs",
+    "test": "vitest run",
+    "prepublishOnly": "npm run typecheck && npm run test && npm pack --dry-run"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "rimraf": "^6.0.1",
+    "vitest": "^3.2.0"
+  }
+}

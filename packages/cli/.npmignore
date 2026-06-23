@@ -1,0 +1,6 @@
+test/
+vitest.config.ts
+.env
+.env.*
+node_modules/
+coverage/
