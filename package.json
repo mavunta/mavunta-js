@@ -1,0 +1,24 @@
+{
+  "name": "coinwaka-js",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Coinwaka developer SDK monorepo (public). @coinwaka/sdk and the coinwaka bridge.",
+  "license": "MIT",
+  "author": "Chainwaka Technologies",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "pnpm -r run build",
+    "typecheck": "pnpm -r run typecheck",
+    "test": "pnpm -r run test",
+    "clean": "pnpm -r run clean"
+  },
+  "devDependencies": {
+    "rimraf": "^6.0.1",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.0",
+    "vitest": "^3.2.0"
+  }
+}

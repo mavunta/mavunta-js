@@ -1,0 +1,77 @@
+{
+  "name": "@coinwaka/sdk",
+  "version": "1.0.0",
+  "description": "Official TypeScript and JavaScript SDK for the Coinwaka API. Build Coinwaka Pay, M-Pesa checkout, crypto settlement, payment links, webhooks, and merchant integrations.",
+  "license": "MIT",
+  "author": "Chainwaka Technologies",
+  "homepage": "https://developers.coinwaka.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coinwaka/coinwaka-js.git",
+    "directory": "packages/sdk"
+  },
+  "bugs": {
+    "url": "https://github.com/coinwaka/coinwaka-js/issues"
+  },
+  "keywords": [
+    "coinwaka",
+    "coinwaka-pay",
+    "mpesa",
+    "m-pesa",
+    "kenya",
+    "payments",
+    "crypto",
+    "usdt",
+    "usdc",
+    "checkout",
+    "payment-links",
+    "webhooks",
+    "merchant",
+    "sdk",
+    "typescript"
+  ],
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./webhooks": {
+      "types": "./dist/webhooks/index.d.ts",
+      "import": "./dist/webhooks/index.js",
+      "require": "./dist/webhooks/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "prepublishOnly": "npm run clean && npm run typecheck && npm run test && npm run build && npm pack --dry-run"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^20.19.0",
+    "rimraf": "^6.0.1",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.0",
+    "vitest": "^3.2.0"
+  }
+}

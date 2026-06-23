@@ -1,0 +1,19 @@
+# Publish only the built dist + docs. Never ship source, tests, configs, or
+# anything that could carry internal/secret material.
+src/
+test/
+tsconfig.json
+tsup.config.ts
+vitest.config.ts
+*.tsbuildinfo
+.env
+.env.*
+*.pem
+*.key
+secrets/
+credentials/
+internal/
+admin/
+fixtures/private/
+node_modules/
+coverage/

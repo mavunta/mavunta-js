@@ -1,0 +1,65 @@
+{
+  "name": "coinwaka",
+  "version": "1.0.0",
+  "description": "Official Coinwaka SDK bridge. Re-exports @coinwaka/sdk.",
+  "license": "MIT",
+  "author": "Chainwaka Technologies",
+  "homepage": "https://developers.coinwaka.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coinwaka/coinwaka-js.git",
+    "directory": "packages/coinwaka"
+  },
+  "bugs": {
+    "url": "https://github.com/coinwaka/coinwaka-js/issues"
+  },
+  "keywords": [
+    "coinwaka",
+    "coinwaka-sdk",
+    "coinwaka-pay",
+    "mpesa",
+    "kenya",
+    "crypto",
+    "payments"
+  ],
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "tsup src/index.ts --format esm,cjs --dts --clean",
+    "typecheck": "tsc --noEmit",
+    "test": "node -e \"console.log('coinwaka bridge: no tests')\"",
+    "prepublishOnly": "npm run clean && npm run build && npm pack --dry-run"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "dependencies": {
+    "@coinwaka/sdk": "workspace:^1.0.0"
+  },
+  "devDependencies": {
+    "rimraf": "^6.0.1",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.0",
+    "vitest": "^3.2.0"
+  }
+}

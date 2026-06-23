@@ -1,0 +1,10 @@
+{
+  "name": "example-node-express-mpesa-checkout",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "dependencies": {
+    "@coinwaka/sdk": "workspace:*",
+    "express": "^4.21.0"
+  }
+}
