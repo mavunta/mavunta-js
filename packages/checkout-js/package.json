@@ -1,0 +1,64 @@
+{
+  "name": "@coinwaka/checkout-js",
+  "version": "1.0.0",
+  "description": "Browser checkout for Coinwaka Pay. Redirect to hosted checkout and poll payment status with a publishable key (M-Pesa, card, PayPal, crypto).",
+  "license": "MIT",
+  "author": "Chainwaka Technologies",
+  "homepage": "https://developers.coinwaka.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coinwaka/coinwaka-js.git",
+    "directory": "packages/checkout-js"
+  },
+  "bugs": {
+    "url": "https://github.com/coinwaka/coinwaka-js/issues"
+  },
+  "keywords": [
+    "coinwaka",
+    "coinwaka-pay",
+    "checkout",
+    "mpesa",
+    "kenya",
+    "payments",
+    "crypto",
+    "browser"
+  ],
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "browser": "./dist/index.global.js",
+  "types": "./dist/index.d.ts",
+  "unpkg": "./dist/index.global.js",
+  "jsdelivr": "./dist/index.global.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "prepublishOnly": "npm run clean && npm run typecheck && npm run test && npm run build && npm pack --dry-run"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "rimraf": "^6.0.1",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.0",
+    "vitest": "^3.2.0"
+  }
+}
