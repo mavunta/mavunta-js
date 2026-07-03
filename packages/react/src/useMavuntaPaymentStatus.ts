@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import { loadCoinwaka, type PaymentIntentView } from '@coinwaka/checkout-js'
+import { loadMavunta, type PaymentIntentView } from '@mavunta/checkout-js'
 
-export interface UseCoinwakaPaymentStatus {
+export interface UseMavuntaPaymentStatus {
   intent: PaymentIntentView | null
   status: string | null
   error: Error | null
@@ -12,11 +12,11 @@ export interface UseCoinwakaPaymentStatus {
  * each change and stopping at a terminal status. Useful for an inline "waiting
  * for payment" view after redirecting away and back, or for a polled receipt.
  */
-export function useCoinwakaPaymentStatus(
+export function useMavuntaPaymentStatus(
   publicKey: string,
   paymentIntentId: string | null,
   options: { baseUrl?: string; intervalMs?: number } = {},
-): UseCoinwakaPaymentStatus {
+): UseMavuntaPaymentStatus {
   const [intent, setIntent] = useState<PaymentIntentView | null>(null)
   const [error, setError] = useState<Error | null>(null)
   const { baseUrl, intervalMs } = options
@@ -25,7 +25,7 @@ export function useCoinwakaPaymentStatus(
     if (!paymentIntentId) return
     let active = true
     let stop: () => void = () => {}
-    loadCoinwaka(publicKey, { baseUrl })
+    loadMavunta(publicKey, { baseUrl })
       .then((client) => {
         if (!active) return
         stop = client.onStatus(paymentIntentId, (next) => setIntent(next), { intervalMs })

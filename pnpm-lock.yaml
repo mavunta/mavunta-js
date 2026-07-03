@@ -58,8 +58,8 @@ importers:
 
   packages/react:
     dependencies:
-      '@coinwaka/checkout-js':
-        specifier: workspace:^1.0.0
+      '@mavunta/checkout-js':
+        specifier: workspace:^1.1.1
         version: link:../checkout-js
     devDependencies:
       '@testing-library/react':

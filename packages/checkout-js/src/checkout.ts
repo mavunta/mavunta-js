@@ -1,4 +1,4 @@
-import { CoinwakaCheckoutError, type CheckoutErrorBody } from './errors.js'
+import { MavuntaCheckoutError, type CheckoutErrorBody } from './errors.js'
 import type { OnStatusOptions, PaymentIntentView, StatusListener } from './types.js'
 
 // Statuses after which polling should stop — the payment is settled one way or
@@ -13,11 +13,11 @@ const TERMINAL_STATUSES = new Set([
 ])
 
 /**
- * Browser checkout client. Created via {@link loadCoinwaka}; uses a publishable
+ * Browser checkout client. Created via {@link loadMavunta}; uses a publishable
  * key only. Its single read is `GET /v1/payment-intents/:id`, which the gateway
  * restricts publishable keys to.
  */
-export class CoinwakaCheckout {
+export class MavuntaCheckout {
   constructor(
     private readonly publicKey: string,
     private readonly baseUrl: string,
@@ -33,7 +33,7 @@ export class CoinwakaCheckout {
     const json = text ? (JSON.parse(text) as unknown) : {}
     if (!res.ok) {
       const body = (json as { error?: CheckoutErrorBody }).error ?? null
-      throw new CoinwakaCheckoutError(res.status, body)
+      throw new MavuntaCheckoutError(res.status, body)
     }
     return json as PaymentIntentView
   }
@@ -45,7 +45,7 @@ export class CoinwakaCheckout {
   async redirectToCheckout(params: { paymentIntentId: string }): Promise<void> {
     const intent = await this.retrievePaymentIntent(params.paymentIntentId)
     if (!intent.checkout_url) {
-      throw new CoinwakaCheckoutError(null, {
+      throw new MavuntaCheckoutError(null, {
         code: 'no_checkout_url',
         message: 'This payment intent has no checkout URL.',
       })

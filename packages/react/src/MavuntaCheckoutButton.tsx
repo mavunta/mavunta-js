@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
-import { useCoinwakaCheckout } from './useCoinwakaCheckout.js'
+import { useMavuntaCheckout } from './useMavuntaCheckout.js'
 
-export interface CoinwakaCheckoutButtonProps {
+export interface MavuntaCheckoutButtonProps {
   /** Your publishable key (`cwk_…_pk_…`). */
   publicKey: string
   /** The payment intent your backend created (with a secret key). */
@@ -12,16 +12,16 @@ export interface CoinwakaCheckoutButtonProps {
   onError?: (error: Error) => void
   className?: string
   disabled?: boolean
-  /** Button label (default: "Pay with Coinwaka"). */
+  /** Button label (default: "Pay with Mavunta"). */
   children?: ReactNode
 }
 
 /**
- * A button that sends the customer to Coinwaka hosted checkout. Success is
+ * A button that sends the customer to Mavunta hosted checkout. Success is
  * confirmed server-side via webhooks after the redirect, so there is no
- * onSuccess here; use {@link useCoinwakaPaymentStatus} for an inline status.
+ * onSuccess here; use {@link useMavuntaPaymentStatus} for an inline status.
  */
-export function CoinwakaCheckoutButton({
+export function MavuntaCheckoutButton({
   publicKey,
   paymentIntentId,
   baseUrl,
@@ -29,8 +29,8 @@ export function CoinwakaCheckoutButton({
   className,
   disabled,
   children,
-}: CoinwakaCheckoutButtonProps) {
-  const { redirectToCheckout, loading } = useCoinwakaCheckout(publicKey, baseUrl)
+}: MavuntaCheckoutButtonProps) {
+  const { redirectToCheckout, loading } = useMavuntaCheckout(publicKey, baseUrl)
 
   return (
     <button
@@ -43,7 +43,7 @@ export function CoinwakaCheckoutButton({
         })
       }}
     >
-      {children ?? 'Pay with Coinwaka'}
+      {children ?? 'Pay with Mavunta'}
     </button>
   )
 }

@@ -1,17 +1,17 @@
 /**
- * @coinwaka/react — React components and hooks for Coinwaka Pay checkout.
+ * @mavunta/react — React components and hooks for Mavunta Pay checkout.
  *
- * Wraps @coinwaka/checkout-js (publishable key, browser only). Your backend
- * creates the payment intent with a secret key via @coinwaka/sdk.
+ * Wraps @mavunta/checkout-js (publishable key, browser only). Your backend
+ * creates the payment intent with a secret key via @mavunta/sdk.
  *
- * Coinwaka is a product of Chainwaka Technologies. Not affiliated with CoinW.
+ * Mavunta is a product of Chainwaka Technologies. Not affiliated with CoinW.
  */
-export { CoinwakaCheckoutButton } from './CoinwakaCheckoutButton.js'
-export type { CoinwakaCheckoutButtonProps } from './CoinwakaCheckoutButton.js'
-export { useCoinwakaCheckout } from './useCoinwakaCheckout.js'
-export type { UseCoinwakaCheckout } from './useCoinwakaCheckout.js'
-export { useCoinwakaPaymentStatus } from './useCoinwakaPaymentStatus.js'
-export type { UseCoinwakaPaymentStatus } from './useCoinwakaPaymentStatus.js'
+export { MavuntaCheckoutButton } from './MavuntaCheckoutButton.js'
+export type { MavuntaCheckoutButtonProps } from './MavuntaCheckoutButton.js'
+export { useMavuntaCheckout } from './useMavuntaCheckout.js'
+export type { UseMavuntaCheckout } from './useMavuntaCheckout.js'
+export { useMavuntaPaymentStatus } from './useMavuntaPaymentStatus.js'
+export type { UseMavuntaPaymentStatus } from './useMavuntaPaymentStatus.js'
 
-export { CoinwakaCheckoutError } from '@coinwaka/checkout-js'
-export type { PaymentIntentView, CheckoutOptions } from '@coinwaka/checkout-js'
+export { MavuntaCheckoutError } from '@mavunta/checkout-js'
+export type { PaymentIntentView, CheckoutOptions } from '@mavunta/checkout-js'

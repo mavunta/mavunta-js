@@ -1,5 +1,5 @@
 export interface CheckoutOptions {
-  /** Override the API base URL (default `https://api.coinwaka.com/v1`). */
+  /** Override the API base URL (default `https://api.mavunta.com/v1`). */
   baseUrl?: string
 }
 

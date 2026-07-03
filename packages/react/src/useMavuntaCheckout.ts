@@ -1,7 +1,7 @@
 import { useCallback, useRef, useState } from 'react'
-import { loadCoinwaka, type CoinwakaCheckout, type PaymentIntentView } from '@coinwaka/checkout-js'
+import { loadMavunta, type MavuntaCheckout, type PaymentIntentView } from '@mavunta/checkout-js'
 
-export interface UseCoinwakaCheckout {
+export interface UseMavuntaCheckout {
   /** Read the public view of a payment intent. */
   retrievePaymentIntent: (id: string) => Promise<PaymentIntentView>
   /** Send the customer to hosted checkout for an existing intent. */
@@ -16,15 +16,15 @@ export interface UseCoinwakaCheckout {
  * Browser checkout for React. Loads a publishable-key client once and exposes
  * redirect + retrieve helpers with loading/error state.
  */
-export function useCoinwakaCheckout(publicKey: string, baseUrl?: string): UseCoinwakaCheckout {
+export function useMavuntaCheckout(publicKey: string, baseUrl?: string): UseMavuntaCheckout {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<Error | null>(null)
-  const clientRef = useRef<{ key: string; base?: string; promise: Promise<CoinwakaCheckout> } | null>(null)
+  const clientRef = useRef<{ key: string; base?: string; promise: Promise<MavuntaCheckout> } | null>(null)
 
-  const getClient = useCallback((): Promise<CoinwakaCheckout> => {
+  const getClient = useCallback((): Promise<MavuntaCheckout> => {
     const cached = clientRef.current
     if (cached && cached.key === publicKey && cached.base === baseUrl) return cached.promise
-    const promise = loadCoinwaka(publicKey, { baseUrl })
+    const promise = loadMavunta(publicKey, { baseUrl })
     clientRef.current = { key: publicKey, base: baseUrl, promise }
     return promise
   }, [publicKey, baseUrl])

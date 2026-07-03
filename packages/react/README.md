@@ -1,27 +1,27 @@
-# @coinwaka/react
+# @mavunta/react
 
-React components and hooks for **Coinwaka Pay** checkout. Wraps [`@coinwaka/checkout-js`](https://www.npmjs.com/package/@coinwaka/checkout-js) (publishable key, browser only); your backend creates the payment intent with a secret key via [`@coinwaka/sdk`](https://www.npmjs.com/package/@coinwaka/sdk).
+React components and hooks for **Mavunta Pay** checkout. Wraps [`@mavunta/checkout-js`](https://www.npmjs.com/package/@mavunta/checkout-js) (publishable key, browser only); your backend creates the payment intent with a secret key via [`@mavunta/sdk`](https://www.npmjs.com/package/@mavunta/sdk).
 
 ## Install
 
 ```bash
-npm install @coinwaka/react react
+npm install @mavunta/react react
 ```
 
 ## Checkout button
 
 ```tsx
-import { CoinwakaCheckoutButton } from '@coinwaka/react'
+import { MavuntaCheckoutButton } from '@mavunta/react'
 
 export function PayButton({ paymentIntentId }: { paymentIntentId: string }) {
   return (
-    <CoinwakaCheckoutButton
+    <MavuntaCheckoutButton
       publicKey="cwk_test_pk_…"
       paymentIntentId={paymentIntentId}
       onError={(e) => console.error(e)}
     >
-      Pay with Coinwaka
-    </CoinwakaCheckoutButton>
+      Pay with Mavunta
+    </MavuntaCheckoutButton>
   )
 }
 ```
@@ -31,13 +31,13 @@ Success is confirmed server-side via webhooks after the redirect, so there is no
 ## Hooks
 
 ```tsx
-import { useCoinwakaCheckout, useCoinwakaPaymentStatus } from '@coinwaka/react'
+import { useMavuntaCheckout, useMavuntaPaymentStatus } from '@mavunta/react'
 
 // imperative checkout
-const { redirectToCheckout, loading, error } = useCoinwakaCheckout('cwk_test_pk_…')
+const { redirectToCheckout, loading, error } = useMavuntaCheckout('cwk_test_pk_…')
 
 // poll a payment's status inline (e.g. a "waiting for payment" screen)
-const { status, intent } = useCoinwakaPaymentStatus('cwk_test_pk_…', paymentIntentId)
+const { status, intent } = useMavuntaPaymentStatus('cwk_test_pk_…', paymentIntentId)
 ```
 
 ## Security

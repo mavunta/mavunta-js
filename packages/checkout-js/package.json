@@ -1,21 +1,21 @@
 {
-  "name": "@coinwaka/checkout-js",
-  "version": "1.0.0",
-  "description": "Browser checkout for Coinwaka Pay. Redirect to hosted checkout and poll payment status with a publishable key (M-Pesa, card, PayPal, crypto).",
+  "name": "@mavunta/checkout-js",
+  "version": "1.1.1",
+  "description": "Browser checkout for Mavunta Pay. Redirect to hosted checkout and poll payment status with a publishable key (M-Pesa, card, PayPal, crypto).",
   "license": "MIT",
   "author": "Chainwaka Technologies",
-  "homepage": "https://developers.coinwaka.com",
+  "homepage": "https://developers.mavunta.com",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/coinwaka/coinwaka-js.git",
+    "url": "git+https://github.com/mavunta/mavunta-js.git",
     "directory": "packages/checkout-js"
   },
   "bugs": {
-    "url": "https://github.com/coinwaka/coinwaka-js/issues"
+    "url": "https://github.com/mavunta/mavunta-js/issues"
   },
   "keywords": [
-    "coinwaka",
-    "coinwaka-pay",
+    "mavunta",
+    "mavunta-pay",
     "checkout",
     "mpesa",
     "kenya",
