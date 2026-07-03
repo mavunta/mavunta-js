@@ -4,13 +4,13 @@ import { promisify } from 'node:util'
 import { describe, expect, it } from 'vitest'
 
 const run = promisify(execFile)
-const BIN = fileURLToPath(new URL('../bin/coinwaka.mjs', import.meta.url))
-const noKeyEnv = { ...process.env, COINWAKA_SECRET_KEY: '', COINWAKA_API_KEY: '' }
+const BIN = fileURLToPath(new URL('../bin/mavunta.mjs', import.meta.url))
+const noKeyEnv = { ...process.env, MAVUNTA_SECRET_KEY: '', MAVUNTA_API_KEY: '' }
 
-describe('coinwaka cli', () => {
+describe('mavunta cli', () => {
   it('prints help', async () => {
     const { stdout } = await run('node', [BIN, 'help'])
-    expect(stdout).toContain('Coinwaka Pay CLI')
+    expect(stdout).toContain('Mavunta Pay CLI')
     expect(stdout).toContain('listen --forward-to')
     expect(stdout).toContain('trigger')
   })

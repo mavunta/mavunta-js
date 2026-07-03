@@ -1,21 +1,13 @@
 {
-  "name": "@coinwaka/cli",
+  "name": "mavunta-cli",
   "version": "1.0.0",
-  "description": "Coinwaka Pay command-line tools: verify keys, trigger sandbox webhooks, and forward live events to your local server for webhook testing.",
+  "description": "Mavunta Pay command-line tools: verify keys, trigger sandbox webhooks, and forward live events to your local server for webhook testing.",
   "license": "MIT",
   "author": "Chainwaka Technologies",
-  "homepage": "https://developers.coinwaka.com",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/coinwaka/coinwaka-js.git",
-    "directory": "packages/cli"
-  },
-  "bugs": {
-    "url": "https://github.com/coinwaka/coinwaka-js/issues"
-  },
+  "homepage": "https://developers.mavunta.com",
   "keywords": [
-    "coinwaka",
-    "coinwaka-pay",
+    "mavunta",
+    "mavunta-pay",
     "cli",
     "webhooks",
     "mpesa",
@@ -24,7 +16,7 @@
   ],
   "type": "module",
   "bin": {
-    "coinwaka": "./bin/coinwaka.mjs"
+    "mavunta": "./bin/mavunta.mjs"
   },
   "files": [
     "bin",
@@ -36,8 +28,8 @@
   },
   "scripts": {
     "clean": "rimraf dist",
-    "typecheck": "node --check bin/coinwaka.mjs",
-    "build": "node --check bin/coinwaka.mjs",
+    "typecheck": "node --check bin/mavunta.mjs",
+    "build": "node --check bin/mavunta.mjs",
     "test": "vitest run",
     "prepublishOnly": "npm run typecheck && npm run test && npm pack --dry-run"
   },

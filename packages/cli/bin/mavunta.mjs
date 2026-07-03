@@ -1,27 +1,27 @@
 #!/usr/bin/env node
-// coinwaka — command-line tools for the Coinwaka Pay API. Zero dependencies
+// mavunta — command-line tools for the Mavunta Pay API. Zero dependencies
 // (Node 18+ global fetch + node:crypto). Its standout command is `listen`,
 // which forwards live sandbox events to your local server for webhook testing.
 import { createHmac, randomBytes } from 'node:crypto'
 
 const VERSION = '1.0.0'
-const BASE = (process.env.COINWAKA_BASE_URL || 'https://api.coinwaka.com/v1').replace(/\/$/, '')
-const KEY = process.env.COINWAKA_SECRET_KEY || process.env.COINWAKA_API_KEY || ''
+const BASE = (process.env.MAVUNTA_BASE_URL || 'https://api.mavunta.com/v1').replace(/\/$/, '')
+const KEY = process.env.MAVUNTA_SECRET_KEY || process.env.MAVUNTA_API_KEY || ''
 
-const HELP = `coinwaka — Coinwaka Pay CLI (v${VERSION})
+const HELP = `mavunta — Mavunta Pay CLI (v${VERSION})
 
 Usage:
-  coinwaka verify                          Verify your API key (no money moves)
-  coinwaka trigger <event>                 Fire a sandbox webhook event
-                                           e.g. coinwaka trigger payment_intent.paid
-  coinwaka listen --forward-to <url>       Forward live sandbox events to a local URL
+  mavunta verify                          Verify your API key (no money moves)
+  mavunta trigger <event>                 Fire a sandbox webhook event
+                                           e.g. mavunta trigger payment_intent.paid
+  mavunta listen --forward-to <url>       Forward live sandbox events to a local URL
                   [--events a,b]           optional comma-separated type filter
-  coinwaka events [--limit N]              Show recent events
-  coinwaka version                         Print the CLI version
+  mavunta events [--limit N]              Show recent events
+  mavunta version                         Print the CLI version
 
 Environment:
-  COINWAKA_SECRET_KEY   your cwk_test_… / cwk_live_… key (required)
-  COINWAKA_BASE_URL     override the API base (default https://api.coinwaka.com/v1)`
+  MAVUNTA_SECRET_KEY   your cwk_test_… / cwk_live_… key (required)
+  MAVUNTA_BASE_URL     override the API base (default https://api.mavunta.com/v1)`
 
 function die(msg, code = 1) {
   console.error(msg)
@@ -57,14 +57,14 @@ function buildUrl(path, query) {
 // fatal=true: print and exit on error (one-shot commands). fatal=false: return
 // null on error (the long-running listen loop must survive transient failures).
 async function request(method, path, { body, query, fatal = true } = {}) {
-  if (!KEY) die('Set COINWAKA_SECRET_KEY to a cwk_test_… or cwk_live_… key.')
+  if (!KEY) die('Set MAVUNTA_SECRET_KEY to a cwk_test_… or cwk_live_… key.')
   try {
     const res = await fetch(buildUrl(path, query), {
       method,
       headers: {
         Authorization: `Bearer ${KEY}`,
         'Content-Type': 'application/json',
-        'User-Agent': `coinwaka-cli/${VERSION}`,
+        'User-Agent': `mavunta-cli/${VERSION}`,
       },
       body: body != null ? JSON.stringify(body) : undefined,
     })
@@ -89,7 +89,7 @@ async function cmdVerify() {
 
 async function cmdTrigger(flags) {
   const type = flags._[0]
-  if (!type) die('Usage: coinwaka trigger <event>   e.g. coinwaka trigger payment_intent.paid')
+  if (!type) die('Usage: mavunta trigger <event>   e.g. mavunta trigger payment_intent.paid')
   await request('POST', '/sandbox/webhooks/trigger', { body: { type } })
   console.log(`Triggered ${type}.`)
 }
@@ -102,12 +102,12 @@ async function cmdEvents(flags) {
 
 async function cmdListen(flags) {
   const url = flags['forward-to']
-  if (!url) die('Usage: coinwaka listen --forward-to http://localhost:3000/webhook')
+  if (!url) die('Usage: mavunta listen --forward-to http://localhost:3000/webhook')
   const filter = flags.events ? new Set(String(flags.events).split(',').map((s) => s.trim())) : null
   const secret = `whsec_cli_${randomBytes(16).toString('hex')}`
   console.log(`Ready! Forwarding sandbox events to ${url}`)
   console.log(`Your webhook signing secret is ${secret}`)
-  console.log('Verify with HMAC-SHA256 over `${Coinwaka-Timestamp}.${rawBody}`.\n')
+  console.log('Verify with HMAC-SHA256 over `${Mavunta-Timestamp}.${rawBody}`.\n')
 
   // Seed the cursor at the latest event so only NEW events are forwarded.
   const seed = await request('GET', '/events', { query: { limit: 1 } })
@@ -131,9 +131,9 @@ async function cmdListen(flags) {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
-                'Coinwaka-Signature': sig,
-                'Coinwaka-Timestamp': ts,
-                'Coinwaka-Event-Id': e.id,
+                'Mavunta-Signature': sig,
+                'Mavunta-Timestamp': ts,
+                'Mavunta-Event-Id': e.id,
               },
               body,
             })
