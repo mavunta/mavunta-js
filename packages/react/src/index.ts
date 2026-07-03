@@ -2,7 +2,7 @@
  * @mavunta/react — React components and hooks for Mavunta Pay checkout.
  *
  * Wraps @mavunta/checkout-js (publishable key, browser only). Your backend
- * creates the payment intent with a secret key via @mavunta/sdk.
+ * creates the payment intent with a secret key via mavunta.
  *
  * Mavunta is a product of Chainwaka Technologies. Not affiliated with CoinW.
  */

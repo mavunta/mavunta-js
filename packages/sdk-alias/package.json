@@ -1,0 +1,23 @@
+{
+  "name": "@mavunta/sdk",
+  "version": "1.1.1",
+  "description": "Alias of the canonical `mavunta` package - the official Mavunta Pay SDK for Node.js / TypeScript. Install either name; they are the same library.",
+  "license": "MIT",
+  "author": "Chainwaka Technologies",
+  "homepage": "https://developers.mavunta.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mavunta/mavunta-js.git",
+    "directory": "packages/sdk-alias"
+  },
+  "type": "module",
+  "main": "./index.cjs",
+  "module": "./index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": { "types": "./index.d.ts", "import": "./index.js", "require": "./index.cjs" },
+    "./webhooks": { "types": "./webhooks.d.ts", "import": "./webhooks.js", "require": "./webhooks.cjs" }
+  },
+  "files": ["index.js", "index.cjs", "index.d.ts", "webhooks.js", "webhooks.cjs", "webhooks.d.ts", "README.md"],
+  "dependencies": { "mavunta": "^1.1.1" }
+}

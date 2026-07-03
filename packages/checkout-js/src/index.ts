@@ -3,7 +3,7 @@
  *
  * Publishable key only. Redirect to hosted checkout and poll payment status
  * from the browser; your backend creates the payment intent with a secret key
- * via @mavunta/sdk.
+ * via mavunta.
  *
  * Mavunta is a product of Chainwaka Technologies. Not affiliated with CoinW.
  */

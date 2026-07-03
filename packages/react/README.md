@@ -1,6 +1,6 @@
 # @mavunta/react
 
-React components and hooks for **Mavunta Pay** checkout. Wraps [`@mavunta/checkout-js`](https://www.npmjs.com/package/@mavunta/checkout-js) (publishable key, browser only); your backend creates the payment intent with a secret key via [`@mavunta/sdk`](https://www.npmjs.com/package/@mavunta/sdk).
+React components and hooks for **Mavunta Pay** checkout. Wraps [`@mavunta/checkout-js`](https://www.npmjs.com/package/@mavunta/checkout-js) (publishable key, browser only); your backend creates the payment intent with a secret key via [`mavunta`](https://www.npmjs.com/package/mavunta).
 
 ## Install
 

@@ -1,6 +1,6 @@
 # @mavunta/checkout-js
 
-Browser checkout for **Mavunta Pay**. Publishable key only — your backend creates the payment intent with a secret key (via [`@mavunta/sdk`](https://www.npmjs.com/package/@mavunta/sdk)); this package sends the customer to checkout and tracks the result.
+Browser checkout for **Mavunta Pay**. Publishable key only — your backend creates the payment intent with a secret key (via [`mavunta`](https://www.npmjs.com/package/mavunta)); this package sends the customer to checkout and tracks the result.
 
 ## Install
 
@@ -46,7 +46,7 @@ const stop = mavunta.onStatus('pi_…', (intent) => {
 ## Links
 
 - Developers: https://developers.mavunta.com
-- Server SDK: https://www.npmjs.com/package/@mavunta/sdk
+- Server SDK: https://www.npmjs.com/package/mavunta
 
 ## License
 
