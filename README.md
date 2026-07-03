@@ -1,54 +1,20 @@
-# coinwaka-js
+# mavunta-js
 
-The official Coinwaka developer SDKs for JavaScript and TypeScript.
+The official Mavunta developer SDKs for JavaScript and TypeScript.
 
-| Package | What it is | Status |
+Mavunta is one API for payments, wallets, and crypto settlement: accept M-Pesa, Airtel Money, card, PayPal, and stablecoins; settle to USDT or USDC. Docs: https://developers.mavunta.com
+
+| Package | What it is | Install |
 | --- | --- | --- |
-| [`@coinwaka/sdk`](packages/sdk) | Server-side SDK: payment intents, links, quotes, customers, refunds, balances, settlements, webhooks | ✅ Phase 1 |
-| [`coinwaka`](packages/coinwaka) | Thin bridge so `npm install coinwaka` works (re-exports `@coinwaka/sdk`) | ✅ Phase 1 |
-| [`@coinwaka/checkout-js`](packages/checkout-js) | Browser checkout: redirect to hosted checkout + poll status with a publishable key | ✅ Phase 2 |
-| [`@coinwaka/react`](packages/react) | React components/hooks around checkout (`CoinwakaCheckoutButton`, `useCoinwakaCheckout`, `useCoinwakaPaymentStatus`) | ✅ Phase 3 |
-| [`@coinwaka/cli`](packages/cli) | CLI: verify keys, trigger sandbox webhooks, and `listen` to forward live events to localhost | ✅ Phase 4 |
+| [`mavunta`](https://www.npmjs.com/package/mavunta) | Server-side SDK (Node.js / TypeScript), full `/v1` surface | `npm install mavunta` |
+| [`mavunta-cli`](https://www.npmjs.com/package/mavunta-cli) | CLI: verify keys, trigger sandbox events, forward webhooks (bin `mavunta`) | `npm install -g mavunta-cli` |
+| [`@mavunta/checkout-js`](https://www.npmjs.com/package/@mavunta/checkout-js) | Browser checkout (publishable keys, hosted checkout redirect) | `npm install @mavunta/checkout-js` |
+| [`@mavunta/react`](https://www.npmjs.com/package/@mavunta/react) | React bindings over checkout-js | `npm install @mavunta/react` |
+| [`@mavunta/sdk`](https://www.npmjs.com/package/@mavunta/sdk) | Alias of `mavunta` (same library) | `npm install mavunta` |
+| [`@mavunta/cli`](https://www.npmjs.com/package/@mavunta/cli) | Alias of `mavunta-cli` (same tool) | `npm install -g mavunta-cli` |
 
-Server keys (`sk_` / `rk_`) belong on the backend; browser code will use a public key via `@coinwaka/checkout-js`.
+Sandbox keys (`cwk_test_…`) call `https://sandbox-api.mavunta.com/v1` and never move real money; live keys call `https://api.mavunta.com/v1`. The SDK and CLI pick the right host from the key prefix.
 
-## Quick start
+The legacy `@coinwaka/*` and `coinwaka` packages are deprecated; this family replaces them.
 
-```bash
-npm install @coinwaka/sdk
-```
-
-```ts
-import { Coinwaka } from '@coinwaka/sdk'
-
-const coinwaka = new Coinwaka({ secretKey: process.env.COINWAKA_SECRET_KEY! })
-
-const intent = await coinwaka.paymentIntents.create({
-  amount: '2500',
-  currency: 'KES',
-  settlement_currency: 'USDT',
-  payment_methods: ['mpesa', 'card', 'paypal', 'coinwaka_balance'],
-})
-// redirect to intent.checkout_url
-```
-
-See [`packages/sdk/README.md`](packages/sdk/README.md) for the full guide and [`examples/`](examples) for runnable code.
-
-## Development
-
-```bash
-pnpm install
-pnpm typecheck
-pnpm test
-pnpm build
-```
-
-## Links
-
-- Developers: https://developers.coinwaka.com
-- Status: https://status.coinwaka.com
-- Support: support@coinwaka.com
-
-## License
-
-MIT © Chainwaka Technologies. Not affiliated with CoinW or any similarly named exchange.
+MIT © Chainwaka Technologies
