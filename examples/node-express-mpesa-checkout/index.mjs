@@ -1,35 +1,35 @@
-// Minimal Coinwaka Pay checkout + webhook on Express.
-//   node index.mjs   (needs COINWAKA_SECRET_KEY and COINWAKA_WEBHOOK_SECRET)
+// Minimal Mavunta Pay checkout + webhook on Express.
+//   node index.mjs   (needs MAVUNTA_SECRET_KEY and MAVUNTA_WEBHOOK_SECRET)
 import express from 'express'
-import { Coinwaka } from '@coinwaka/sdk'
+import Mavunta from 'mavunta'
 
-const coinwaka = new Coinwaka({ secretKey: process.env.COINWAKA_SECRET_KEY })
+const mavunta = new Mavunta({ secretKey: process.env.MAVUNTA_SECRET_KEY })
 const app = express()
 
 // 1) Create a payment intent and send the customer to hosted checkout.
 app.post('/checkout', express.json(), async (req, res) => {
-  const intent = await coinwaka.paymentIntents.create({
+  const intent = await mavunta.paymentIntents.create({
     amount: String(req.body.amount ?? '2500'),
     currency: 'KES',
     settlement_currency: 'USDT',
-    payment_methods: ['mpesa', 'card', 'paypal', 'coinwaka_balance'],
+    payment_methods: ['mpesa', 'card', 'paypal', 'mavunta_balance'],
     customer: { email: req.body.email, phone: req.body.phone },
     metadata: { orderId: req.body.orderId },
   })
-  // checkoutUrl for a plain redirect; paymentIntentId for @coinwaka/checkout-js
+  // checkoutUrl for a plain redirect; paymentIntentId for @mavunta/checkout-js
   // (see ../browser-checkout).
   res.json({ paymentIntentId: intent.id, checkoutUrl: intent.checkout_url })
 })
 
 // 2) Confirm the result with a signed webhook (raw body!).
-app.post('/coinwaka/webhook', express.raw({ type: 'application/json' }), (req, res) => {
+app.post('/mavunta/webhook', express.raw({ type: 'application/json' }), (req, res) => {
   let event
   try {
-    event = coinwaka.webhooks.verify({
+    event = mavunta.webhooks.verify({
       payload: req.body,
-      signature: req.headers['coinwaka-signature'],
-      timestamp: req.headers['coinwaka-timestamp'],
-      secret: process.env.COINWAKA_WEBHOOK_SECRET,
+      signature: req.headers['mavunta-signature'],
+      timestamp: req.headers['mavunta-timestamp'],
+      secret: process.env.MAVUNTA_WEBHOOK_SECRET,
     })
   } catch {
     return res.sendStatus(400)

@@ -1,4 +1,4 @@
-import type { Coinwaka } from '../client.js'
+import type { Mavunta } from '../client.js'
 
 export interface ReportParams {
   /** ISO date or unix-seconds range bound, per the API docs. */
@@ -9,7 +9,7 @@ export interface ReportParams {
 }
 
 export class ReportsResource {
-  constructor(private readonly client: Coinwaka) {}
+  constructor(private readonly client: Mavunta) {}
 
   /** Tabular payments report for reconciliation. */
   payments(params: ReportParams = {}): Promise<Record<string, unknown>> {

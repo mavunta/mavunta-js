@@ -1,7 +1,7 @@
 import { createHmac } from 'node:crypto'
 import { describe, expect, it } from 'vitest'
 import { verifyWebhook } from '../src/webhooks/verify.js'
-import { CoinwakaWebhookSignatureError } from '../src/errors.js'
+import { MavuntaWebhookSignatureError } from '../src/errors.js'
 
 const SECRET = 'whsec_test_abc123'
 
@@ -32,13 +32,13 @@ describe('verifyWebhook', () => {
   it('rejects a tampered body', () => {
     expect(() =>
       verifyWebhook({ payload: body + ' ', signature: sign(body, now), timestamp: now, secret: SECRET }),
-    ).toThrow(CoinwakaWebhookSignatureError)
+    ).toThrow(MavuntaWebhookSignatureError)
   })
 
   it('rejects a wrong secret', () => {
     expect(() =>
       verifyWebhook({ payload: body, signature: sign(body, now, 'whsec_wrong'), timestamp: now, secret: SECRET }),
-    ).toThrow(CoinwakaWebhookSignatureError)
+    ).toThrow(MavuntaWebhookSignatureError)
   })
 
   it('rejects a stale timestamp', () => {
@@ -50,7 +50,7 @@ describe('verifyWebhook', () => {
 
   it('rejects a missing signature', () => {
     expect(() => verifyWebhook({ payload: body, signature: '', timestamp: now, secret: SECRET })).toThrow(
-      CoinwakaWebhookSignatureError,
+      MavuntaWebhookSignatureError,
     )
   })
 })

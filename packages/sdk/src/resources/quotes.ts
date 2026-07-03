@@ -1,4 +1,4 @@
-import type { Coinwaka } from '../client.js'
+import type { Mavunta } from '../client.js'
 
 export interface CreateQuoteParams {
   source_currency: string
@@ -8,7 +8,7 @@ export interface CreateQuoteParams {
 }
 
 export class QuotesResource {
-  constructor(private readonly client: Coinwaka) {}
+  constructor(private readonly client: Mavunta) {}
 
   /** Create a short-lived quote locking a rate for a conversion. */
   create(params: CreateQuoteParams): Promise<Record<string, unknown>> {

@@ -1,21 +1,13 @@
 {
-  "name": "@coinwaka/sdk",
+  "name": "mavunta",
   "version": "1.0.0",
-  "description": "Official TypeScript and JavaScript SDK for the Coinwaka API. Build Coinwaka Pay, M-Pesa checkout, crypto settlement, payment links, webhooks, and merchant integrations.",
+  "description": "Official TypeScript and JavaScript SDK for the Mavunta API. Build Mavunta Pay, M-Pesa checkout, crypto settlement, payment links, webhooks, and merchant integrations.",
   "license": "MIT",
   "author": "Chainwaka Technologies",
-  "homepage": "https://developers.coinwaka.com",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/coinwaka/coinwaka-js.git",
-    "directory": "packages/sdk"
-  },
-  "bugs": {
-    "url": "https://github.com/coinwaka/coinwaka-js/issues"
-  },
+  "homepage": "https://developers.mavunta.com",
   "keywords": [
-    "coinwaka",
-    "coinwaka-pay",
+    "mavunta",
+    "mavunta-pay",
     "mpesa",
     "m-pesa",
     "kenya",

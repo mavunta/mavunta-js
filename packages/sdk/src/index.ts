@@ -1,52 +1,51 @@
 /**
- * @coinwaka/sdk — Official TypeScript and JavaScript SDK for the Coinwaka API.
+ * mavunta — Official TypeScript and JavaScript SDK for the Mavunta API.
  *
- * Server-side only. Build Coinwaka Pay: M-Pesa, card, PayPal, Coinwaka Balance,
+ * Server-side only. Build Mavunta Pay: M-Pesa, card, PayPal, Mavunta Balance,
  * and crypto payments with USDT/USDC/BTC/ETH/SOL settlement, payment links,
  * and signed webhooks.
  *
  * ```ts
- * import { Coinwaka } from '@coinwaka/sdk'
+ * import Mavunta from 'mavunta'
  *
- * const coinwaka = new Coinwaka({ secretKey: process.env.COINWAKA_SECRET_KEY! })
+ * const mavunta = new Mavunta({ secretKey: process.env.MAVUNTA_SECRET_KEY! })
  *
- * const intent = await coinwaka.paymentIntents.create({
+ * const intent = await mavunta.paymentIntents.create({
  *   amount: '2500',
  *   currency: 'KES',
  *   settlement_currency: 'USDT',
- *   payment_methods: ['mpesa', 'card', 'paypal', 'coinwaka_balance'],
+ *   payment_methods: ['mpesa', 'card', 'paypal', 'mavunta_balance'],
  * })
  * // → redirect the customer to intent.checkout_url
  * ```
  *
- * Coinwaka is a product of Chainwaka Technologies. This package is not
- * affiliated with CoinW or any similarly named exchange.
+ * Mavunta is a product of Chainwaka Technologies.
  */
 
-export { Coinwaka } from './client.js'
-export { Coinwaka as default } from './client.js'
+export { Mavunta } from './client.js'
+export { Mavunta as default } from './client.js'
 
 export {
-  CoinwakaError,
-  CoinwakaAPIError,
-  CoinwakaAuthenticationError,
-  CoinwakaPermissionError,
-  CoinwakaValidationError,
-  CoinwakaIdempotencyError,
-  CoinwakaRateLimitError,
-  CoinwakaConnectionError,
-  CoinwakaTimeoutError,
-  CoinwakaWebhookSignatureError,
+  MavuntaError,
+  MavuntaAPIError,
+  MavuntaAuthenticationError,
+  MavuntaPermissionError,
+  MavuntaValidationError,
+  MavuntaIdempotencyError,
+  MavuntaRateLimitError,
+  MavuntaConnectionError,
+  MavuntaTimeoutError,
+  MavuntaWebhookSignatureError,
 } from './errors.js'
-export type { CoinwakaErrorBody } from './errors.js'
+export type { MavuntaErrorBody } from './errors.js'
 
 export { verifyWebhook } from './webhooks/verify.js'
 export type { VerifyWebhookParams } from './webhooks/verify.js'
 export { WebhooksResource } from './webhooks/index.js'
 
 export type {
-  CoinwakaEnvironment,
-  CoinwakaOptions,
+  MavuntaEnvironment,
+  MavuntaOptions,
   RequestOptions,
   ListResponse,
   SettlementCurrency,

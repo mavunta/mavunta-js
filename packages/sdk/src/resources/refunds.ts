@@ -1,4 +1,4 @@
-import type { Coinwaka } from '../client.js'
+import type { Mavunta } from '../client.js'
 import type { ListResponse, Refund, RequestOptions } from '../types.js'
 
 export interface CreateRefundParams {
@@ -7,7 +7,7 @@ export interface CreateRefundParams {
 }
 
 export class RefundsResource {
-  constructor(private readonly client: Coinwaka) {}
+  constructor(private readonly client: Mavunta) {}
 
   /**
    * Refund a paid payment in full. Partial refunds are not supported, and a

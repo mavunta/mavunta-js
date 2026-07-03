@@ -1,4 +1,4 @@
-import type { Coinwaka } from '../client.js'
+import type { Mavunta } from '../client.js'
 import type { ListResponse, WebhookEvent } from '../types.js'
 
 export interface ListWebhookEventsParams {
@@ -8,7 +8,7 @@ export interface ListWebhookEventsParams {
 }
 
 export class WebhookEventsResource {
-  constructor(private readonly client: Coinwaka) {}
+  constructor(private readonly client: Mavunta) {}
 
   list(params: ListWebhookEventsParams = {}): Promise<ListResponse<WebhookEvent>> {
     return this.client.request('GET', '/webhook_events', { query: { ...params } })

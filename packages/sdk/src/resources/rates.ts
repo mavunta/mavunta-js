@@ -1,7 +1,7 @@
-import type { Coinwaka } from '../client.js'
+import type { Mavunta } from '../client.js'
 
 export class RatesResource {
-  constructor(private readonly client: Coinwaka) {}
+  constructor(private readonly client: Mavunta) {}
 
   /** Current indicative FX and crypto rates used for quotes. */
   retrieve(): Promise<Record<string, unknown>> {

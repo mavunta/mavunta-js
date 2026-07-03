@@ -1,4 +1,4 @@
-import type { Coinwaka } from '../client.js'
+import type { Mavunta } from '../client.js'
 import type {
   CreatePaymentIntentParams,
   ListResponse,
@@ -13,7 +13,7 @@ export interface ListPaymentIntentsParams {
 }
 
 export class PaymentIntentsResource {
-  constructor(private readonly client: Coinwaka) {}
+  constructor(private readonly client: Mavunta) {}
 
   /** Create a payment intent and get a `checkout_url` to send the customer to. */
   create(

@@ -1,4 +1,4 @@
-import type { Coinwaka } from '../client.js'
+import type { Mavunta } from '../client.js'
 import type {
   CreateWebhookEndpointParams,
   ListResponse,
@@ -7,7 +7,7 @@ import type {
 } from '../types.js'
 
 export class WebhookEndpointsResource {
-  constructor(private readonly client: Coinwaka) {}
+  constructor(private readonly client: Mavunta) {}
 
   create(
     params: CreateWebhookEndpointParams,

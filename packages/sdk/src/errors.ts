@@ -1,14 +1,14 @@
 /**
- * Error hierarchy for the Coinwaka SDK.
+ * Error hierarchy for the Mavunta SDK.
  *
- * Every failure surfaces as a {@link CoinwakaError} subclass so callers can
+ * Every failure surfaces as a {@link MavuntaError} subclass so callers can
  * branch on the type and read `code` / `requestId` for support. The shape
  * mirrors the API's error envelope (spec §24):
  *
  *   { error: { type, code, message, param, request_id, docs_url } }
  */
 
-export interface CoinwakaErrorBody {
+export interface MavuntaErrorBody {
   type?: string
   code?: string
   message?: string
@@ -17,7 +17,7 @@ export interface CoinwakaErrorBody {
   docs_url?: string
 }
 
-export interface CoinwakaErrorInit {
+export interface MavuntaErrorInit {
   type?: string
   code?: string
   param?: string | null
@@ -27,7 +27,7 @@ export interface CoinwakaErrorInit {
 }
 
 /** Base class for everything thrown by the SDK. */
-export class CoinwakaError extends Error {
+export class MavuntaError extends Error {
   readonly type: string
   readonly code: string
   readonly param: string | null
@@ -35,7 +35,7 @@ export class CoinwakaError extends Error {
   readonly statusCode: number | null
   readonly docsUrl: string | null
 
-  constructor(message: string, init: CoinwakaErrorInit = {}) {
+  constructor(message: string, init: MavuntaErrorInit = {}) {
     super(message)
     this.name = this.constructor.name
     this.type = init.type ?? 'api_error'
@@ -48,26 +48,26 @@ export class CoinwakaError extends Error {
 }
 
 /** A non-2xx response that does not map to a more specific class. */
-export class CoinwakaAPIError extends CoinwakaError {}
+export class MavuntaAPIError extends MavuntaError {}
 /** 401: missing, invalid, or revoked API key. */
-export class CoinwakaAuthenticationError extends CoinwakaError {}
+export class MavuntaAuthenticationError extends MavuntaError {}
 /** 403: the key is valid but lacks the scope for this action. */
-export class CoinwakaPermissionError extends CoinwakaError {}
+export class MavuntaPermissionError extends MavuntaError {}
 /** 400 / 422: the request was malformed or failed validation. */
-export class CoinwakaValidationError extends CoinwakaError {}
+export class MavuntaValidationError extends MavuntaError {}
 /** 409 on a money-moving create with a reused idempotency key. */
-export class CoinwakaIdempotencyError extends CoinwakaError {}
+export class MavuntaIdempotencyError extends MavuntaError {}
 /** A network failure before a response was received. */
-export class CoinwakaConnectionError extends CoinwakaError {}
+export class MavuntaConnectionError extends MavuntaError {}
 /** The request exceeded the configured timeout. */
-export class CoinwakaTimeoutError extends CoinwakaError {}
+export class MavuntaTimeoutError extends MavuntaError {}
 /** Webhook signature verification failed. */
-export class CoinwakaWebhookSignatureError extends CoinwakaError {}
+export class MavuntaWebhookSignatureError extends MavuntaError {}
 
 /** 429: too many requests. `retryAfterMs` is parsed from `retry-after`. */
-export class CoinwakaRateLimitError extends CoinwakaError {
+export class MavuntaRateLimitError extends MavuntaError {
   readonly retryAfterMs: number | null
-  constructor(message: string, init: CoinwakaErrorInit & { retryAfterMs?: number | null } = {}) {
+  constructor(message: string, init: MavuntaErrorInit & { retryAfterMs?: number | null } = {}) {
     super(message, init)
     this.retryAfterMs = init.retryAfterMs ?? null
   }
@@ -79,10 +79,10 @@ export class CoinwakaRateLimitError extends CoinwakaError {
  */
 export function errorFromResponse(
   status: number,
-  body: CoinwakaErrorBody | null,
+  body: MavuntaErrorBody | null,
   retryAfterMs: number | null = null,
-): CoinwakaError {
-  const init: CoinwakaErrorInit = {
+): MavuntaError {
+  const init: MavuntaErrorInit = {
     type: body?.type,
     code: body?.code,
     param: body?.param ?? null,
@@ -90,14 +90,14 @@ export function errorFromResponse(
     statusCode: status,
     docsUrl: body?.docs_url ?? null,
   }
-  const message = body?.message ?? `Coinwaka API error (HTTP ${status})`
+  const message = body?.message ?? `Mavunta API error (HTTP ${status})`
 
-  if (status === 401) return new CoinwakaAuthenticationError(message, init)
-  if (status === 403) return new CoinwakaPermissionError(message, init)
-  if (status === 429) return new CoinwakaRateLimitError(message, { ...init, retryAfterMs })
+  if (status === 401) return new MavuntaAuthenticationError(message, init)
+  if (status === 403) return new MavuntaPermissionError(message, init)
+  if (status === 429) return new MavuntaRateLimitError(message, { ...init, retryAfterMs })
   if (status === 409 || body?.type === 'idempotency_error')
-    return new CoinwakaIdempotencyError(message, init)
+    return new MavuntaIdempotencyError(message, init)
   if (status === 400 || status === 422 || body?.type === 'validation_error')
-    return new CoinwakaValidationError(message, init)
-  return new CoinwakaAPIError(message, init)
+    return new MavuntaValidationError(message, init)
+  return new MavuntaAPIError(message, init)
 }

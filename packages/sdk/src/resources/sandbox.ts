@@ -1,4 +1,4 @@
-import type { Coinwaka } from '../client.js'
+import type { Mavunta } from '../client.js'
 import type { WebhookEvent } from '../types.js'
 
 export interface TriggerWebhookParams {
@@ -13,7 +13,7 @@ export interface TriggerWebhookParams {
  * with a live key returns an error from the API.
  */
 export class SandboxResource {
-  constructor(private readonly client: Coinwaka) {}
+  constructor(private readonly client: Mavunta) {}
 
   /** Fire a simulated webhook event to your configured endpoints. */
   triggerWebhook(params: TriggerWebhookParams): Promise<WebhookEvent> {

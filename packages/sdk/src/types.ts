@@ -1,14 +1,14 @@
-/** Shared types for the Coinwaka SDK. Resource payloads are pragmatic subsets:
+/** Shared types for the Mavunta SDK. Resource payloads are pragmatic subsets:
  *  unknown fields pass through, so a forward-compatible API never breaks a build. */
 
-export type CoinwakaEnvironment = 'sandbox' | 'live'
+export type MavuntaEnvironment = 'sandbox' | 'live'
 
-export interface CoinwakaOptions {
+export interface MavuntaOptions {
   /** Your secret (`cwk_…_sk_`) or restricted (`cwk_…_rk_`) key. Never a public key. */
   secretKey: string
   /** Informational; the key prefix selects test vs live server-side. */
-  environment?: CoinwakaEnvironment
-  /** Override the API base URL (default `https://api.coinwaka.com/v1`). */
+  environment?: MavuntaEnvironment
+  /** Override the API base URL (default `https://api.mavunta.com/v1`). */
   baseUrl?: string
   /** Per-request timeout in ms (default 30000). */
   timeoutMs?: number
@@ -30,12 +30,12 @@ export interface ListResponse<T> {
 
 interface EnvelopeFields {
   request_id?: string
-  environment?: CoinwakaEnvironment
+  environment?: MavuntaEnvironment
   livemode?: boolean
 }
 
 export type SettlementCurrency = 'USDT' | 'USDC' | 'BTC' | 'ETH' | 'SOL'
-export type PaymentMethod = 'coinwaka_balance' | 'mpesa' | 'card' | 'paypal' | 'external_wallet'
+export type PaymentMethod = 'mavunta_balance' | 'mpesa' | 'card' | 'paypal' | 'external_wallet'
 
 export interface PaymentIntent extends EnvelopeFields {
   id: string

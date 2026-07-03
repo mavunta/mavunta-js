@@ -1,26 +1,26 @@
-# @coinwaka/sdk
+# mavunta
 
-Official TypeScript and JavaScript SDK for the Coinwaka API.
+Official TypeScript and JavaScript SDK for the Mavunta API.
 
-Coinwaka helps merchants accept **M-Pesa, card, PayPal, Coinwaka Balance, and crypto** payments, with settlement to **USDT, USDC, BTC, ETH, or SOL**. Create a payment intent, send the customer to hosted checkout, then confirm the result with signed webhooks.
+Mavunta helps merchants accept **M-Pesa, card, PayPal, Mavunta Balance, and crypto** payments, with settlement to **USDT, USDC, BTC, ETH, or SOL**. Create a payment intent, send the customer to hosted checkout, then confirm the result with signed webhooks.
 
-> Server-side only. This package uses your **secret** (`cwk_…_sk_`) or **restricted** (`cwk_…_rk_`) key and must never run in a browser. Browser checkout will ship as `@coinwaka/checkout-js`.
+> Server-side only. This package uses your **secret** (`cwk_…_sk_`) or **restricted** (`cwk_…_rk_`) key and must never run in a browser.
 
 ## Installation
 
 ```bash
-npm install @coinwaka/sdk
+npm install mavunta
 ```
 
-`npm install coinwaka` also works (it re-exports this package).
+`npm install mavunta` also works (it re-exports this package).
 
 ## Quick start
 
 ```ts
-import { Coinwaka } from '@coinwaka/sdk'
+import Mavunta from 'mavunta'
 
-const coinwaka = new Coinwaka({
-  secretKey: process.env.COINWAKA_SECRET_KEY!,
+const mavunta = new Mavunta({
+  secretKey: process.env.MAVUNTA_SECRET_KEY!,
   environment: 'sandbox', // informational; the key prefix selects the mode
 })
 ```
@@ -28,11 +28,11 @@ const coinwaka = new Coinwaka({
 ## Create a payment intent
 
 ```ts
-const intent = await coinwaka.paymentIntents.create({
+const intent = await mavunta.paymentIntents.create({
   amount: '2500',
   currency: 'KES',
   settlement_currency: 'USDT',
-  payment_methods: ['mpesa', 'card', 'paypal', 'coinwaka_balance'],
+  payment_methods: ['mpesa', 'card', 'paypal', 'mavunta_balance'],
   customer: { email: 'customer@example.com', phone: '+254712345678' },
   metadata: { orderId: 'ORD-1001' },
 })
@@ -44,7 +44,7 @@ return intent.checkout_url
 ## Payment links and QR
 
 ```ts
-const link = await coinwaka.paymentLinks.create({
+const link = await mavunta.paymentLinks.create({
   title: 'Order #1001',
   amount: '2500',
   currency: 'KES',
@@ -59,18 +59,18 @@ Payment results are asynchronous (M-Pesa, card redirects, crypto confirmations),
 
 ```ts
 import express from 'express'
-import { Coinwaka } from '@coinwaka/sdk'
+import Mavunta from 'mavunta'
 
-const coinwaka = new Coinwaka({ secretKey: process.env.COINWAKA_SECRET_KEY! })
+const mavunta = new Mavunta({ secretKey: process.env.MAVUNTA_SECRET_KEY! })
 
-app.post('/coinwaka/webhook', express.raw({ type: 'application/json' }), (req, res) => {
+app.post('/mavunta/webhook', express.raw({ type: 'application/json' }), (req, res) => {
   let event
   try {
-    event = coinwaka.webhooks.verify({
+    event = mavunta.webhooks.verify({
       payload: req.body, // raw Buffer
-      signature: req.headers['coinwaka-signature'] as string,
-      timestamp: req.headers['coinwaka-timestamp'] as string,
-      secret: process.env.COINWAKA_WEBHOOK_SECRET!,
+      signature: req.headers['mavunta-signature'] as string,
+      timestamp: req.headers['mavunta-timestamp'] as string,
+      secret: process.env.MAVUNTA_WEBHOOK_SECRET!,
     })
   } catch {
     return res.sendStatus(400)
@@ -86,7 +86,7 @@ app.post('/coinwaka/webhook', express.raw({ type: 'application/json' }), (req, r
 Only need verification? Import it standalone:
 
 ```ts
-import { verifyWebhook } from '@coinwaka/sdk/webhooks'
+import { verifyWebhook } from 'mavunta/webhooks'
 ```
 
 ## Sandbox and live mode
@@ -94,7 +94,7 @@ import { verifyWebhook } from '@coinwaka/sdk/webhooks'
 The key prefix selects the mode (`cwk_test_…` vs `cwk_live_…`); responses carry `environment` and `livemode`. In sandbox you can simulate events:
 
 ```ts
-await coinwaka.sandbox.triggerWebhook({ type: 'payment_intent.paid' })
+await mavunta.sandbox.triggerWebhook({ type: 'payment_intent.paid' })
 ```
 
 ## API keys
@@ -111,26 +111,26 @@ Never embed a secret key in a browser, mobile app, or public repo.
 Every money-moving create is retry-safe. Pass your own key, or let the SDK generate one per request:
 
 ```ts
-await coinwaka.paymentIntents.create(params, { idempotencyKey: 'order_1001_attempt_1' })
+await mavunta.paymentIntents.create(params, { idempotencyKey: 'order_1001_attempt_1' })
 ```
 
 ## Errors
 
 ```ts
-import { CoinwakaError, CoinwakaValidationError } from '@coinwaka/sdk'
+import { MavuntaError, MavuntaValidationError } from 'mavunta'
 
 try {
-  await coinwaka.paymentIntents.create(params)
+  await mavunta.paymentIntents.create(params)
 } catch (err) {
-  if (err instanceof CoinwakaValidationError) {
+  if (err instanceof MavuntaValidationError) {
     console.log(err.code, err.param)
-  } else if (err instanceof CoinwakaError) {
+  } else if (err instanceof MavuntaError) {
     console.log(err.code, err.requestId, err.statusCode)
   }
 }
 ```
 
-Classes: `CoinwakaError`, `CoinwakaAPIError`, `CoinwakaAuthenticationError`, `CoinwakaPermissionError`, `CoinwakaValidationError`, `CoinwakaIdempotencyError`, `CoinwakaRateLimitError`, `CoinwakaConnectionError`, `CoinwakaTimeoutError`, `CoinwakaWebhookSignatureError`.
+Classes: `MavuntaError`, `MavuntaAPIError`, `MavuntaAuthenticationError`, `MavuntaPermissionError`, `MavuntaValidationError`, `MavuntaIdempotencyError`, `MavuntaRateLimitError`, `MavuntaConnectionError`, `MavuntaTimeoutError`, `MavuntaWebhookSignatureError`.
 
 ## Resources
 
@@ -144,12 +144,12 @@ Classes: `CoinwakaError`, `CoinwakaAPIError`, `CoinwakaAuthenticationError`, `Co
 
 ## Support
 
-- Website: https://www.coinwaka.com
-- Developers: https://developers.coinwaka.com
-- Status: https://status.coinwaka.com
-- Support: support@coinwaka.com
-- Security: security@coinwaka.com
+- Website: https://www.mavunta.com
+- Developers: https://developers.mavunta.com
+- Status: https://status.mavunta.com
+- Support: support@mavunta.com
+- Security: security@mavunta.com
 
 ## License
 
-MIT © Chainwaka Technologies. This package is not affiliated with CoinW or any similarly named exchange.
+MIT © Chainwaka Technologies.

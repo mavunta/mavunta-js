@@ -1,4 +1,4 @@
-import type { Coinwaka } from '../client.js'
+import type { Mavunta } from '../client.js'
 import type { ListResponse, Settlement } from '../types.js'
 
 export interface ListSettlementsParams {
@@ -8,7 +8,7 @@ export interface ListSettlementsParams {
 }
 
 export class SettlementsResource {
-  constructor(private readonly client: Coinwaka) {}
+  constructor(private readonly client: Mavunta) {}
 
   list(params: ListSettlementsParams = {}): Promise<ListResponse<Settlement>> {
     return this.client.request('GET', '/settlements', { query: { ...params } })

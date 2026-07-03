@@ -1,8 +1,8 @@
-import type { Coinwaka } from '../client.js'
+import type { Mavunta } from '../client.js'
 import type { CreatePaymentLinkParams, PaymentLink, RequestOptions } from '../types.js'
 
 export class PaymentLinksResource {
-  constructor(private readonly client: Coinwaka) {}
+  constructor(private readonly client: Mavunta) {}
 
   /** Create a reusable payment link (with a hosted page + QR). */
   create(params: CreatePaymentLinkParams, options: RequestOptions = {}): Promise<PaymentLink> {

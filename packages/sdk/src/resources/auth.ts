@@ -1,8 +1,8 @@
-import type { Coinwaka } from '../client.js'
+import type { Mavunta } from '../client.js'
 import type { AuthVerifyResult } from '../types.js'
 
 export class AuthResource {
-  constructor(private readonly client: Coinwaka) {}
+  constructor(private readonly client: Mavunta) {}
 
   /** Verify the current API key and return its merchant, scopes, and mode. */
   verify(): Promise<AuthVerifyResult> {

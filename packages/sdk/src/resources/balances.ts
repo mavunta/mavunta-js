@@ -1,8 +1,8 @@
-import type { Coinwaka } from '../client.js'
+import type { Mavunta } from '../client.js'
 import type { Balance } from '../types.js'
 
 export class BalancesResource {
-  constructor(private readonly client: Coinwaka) {}
+  constructor(private readonly client: Mavunta) {}
 
   /** Retrieve the merchant's available and pending balances by asset. */
   retrieve(): Promise<Balance> {

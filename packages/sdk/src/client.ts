@@ -1,11 +1,11 @@
 import { randomUUID } from 'node:crypto'
 import {
-  CoinwakaConnectionError,
-  CoinwakaTimeoutError,
+  MavuntaConnectionError,
+  MavuntaTimeoutError,
   errorFromResponse,
-  type CoinwakaErrorBody,
+  type MavuntaErrorBody,
 } from './errors.js'
-import type { CoinwakaOptions } from './types.js'
+import type { MavuntaOptions } from './types.js'
 import { AuthResource } from './resources/auth.js'
 import { RatesResource } from './resources/rates.js'
 import { QuotesResource } from './resources/quotes.js'
@@ -21,7 +21,7 @@ import { WebhookEventsResource } from './resources/webhook-events.js'
 import { SandboxResource } from './resources/sandbox.js'
 import { WebhooksResource } from './webhooks/index.js'
 
-const DEFAULT_BASE_URL = 'https://api.coinwaka.com/v1'
+const DEFAULT_BASE_URL = 'https://api.mavunta.com/v1'
 const API_VERSION = '2026-06-01'
 const SDK_VERSION = '1.0.0'
 
@@ -46,19 +46,19 @@ function parseRetryAfterMs(header: string | null): number | null {
 }
 
 /**
- * The Coinwaka API client. Server-side only: it authenticates with a secret or
+ * The Mavunta API client. Server-side only: it authenticates with a secret or
  * restricted key and must never run in a browser.
  *
  * ```ts
- * import { Coinwaka } from '@coinwaka/sdk'
- * const coinwaka = new Coinwaka({ secretKey: process.env.COINWAKA_SECRET_KEY! })
- * const intent = await coinwaka.paymentIntents.create({
+ * import Mavunta from 'mavunta'
+ * const mavunta = new Mavunta({ secretKey: process.env.MAVUNTA_SECRET_KEY! })
+ * const intent = await mavunta.paymentIntents.create({
  *   amount: '2500', currency: 'KES', settlement_currency: 'USDT',
  *   payment_methods: ['mpesa', 'card'],
  * })
  * ```
  */
-export class Coinwaka {
+export class Mavunta {
   readonly auth: AuthResource
   readonly rates: RatesResource
   readonly quotes: QuotesResource
@@ -80,13 +80,13 @@ export class Coinwaka {
   private readonly timeoutMs: number
   private readonly maxRetries: number
 
-  constructor(options: CoinwakaOptions) {
+  constructor(options: MavuntaOptions) {
     if (!options || !options.secretKey) {
-      throw new Error('Coinwaka: `secretKey` is required.')
+      throw new Error('Mavunta: `secretKey` is required.')
     }
     if (/_pk_/.test(options.secretKey)) {
       throw new Error(
-        'Coinwaka: a public key (pk_) cannot be used here. The server SDK needs a secret (sk_) or restricted (rk_) key.',
+        'Mavunta: a public key (pk_) cannot be used here. The server SDK needs a secret (sk_) or restricted (rk_) key.',
       )
     }
     this.secretKey = options.secretKey
@@ -122,8 +122,8 @@ export class Coinwaka {
     const headers: Record<string, string> = {
       Authorization: `Bearer ${this.secretKey}`,
       Accept: 'application/json',
-      'Coinwaka-Version': API_VERSION,
-      'User-Agent': `coinwaka-sdk/${SDK_VERSION}`,
+      'Mavunta-Version': API_VERSION,
+      'User-Agent': `mavunta-sdk/${SDK_VERSION}`,
     }
     if (opts.body !== undefined) headers['Content-Type'] = 'application/json'
 
@@ -155,11 +155,11 @@ export class Coinwaka {
           continue
         }
 
-        const body = (json as { error?: CoinwakaErrorBody }).error ?? null
+        const body = (json as { error?: MavuntaErrorBody }).error ?? null
         throw errorFromResponse(res.status, body, parseRetryAfterMs(res.headers.get('retry-after')))
       } catch (err) {
         // A built error envelope is final; rethrow it.
-        if (err instanceof Error && err.name.startsWith('Coinwaka')) throw err
+        if (err instanceof Error && err.name.startsWith('Mavunta')) throw err
         lastError = err
         const isTimeout = err instanceof Error && err.name === 'TimeoutError'
         if (attempt < this.maxRetries) {
@@ -167,14 +167,14 @@ export class Coinwaka {
           continue
         }
         if (isTimeout) {
-          throw new CoinwakaTimeoutError(`Coinwaka: request timed out after ${this.timeoutMs}ms.`, {
+          throw new MavuntaTimeoutError(`Mavunta: request timed out after ${this.timeoutMs}ms.`, {
             code: 'timeout',
           })
         }
       }
     }
-    throw new CoinwakaConnectionError(
-      `Coinwaka: request failed (${lastError instanceof Error ? lastError.message : String(lastError)}).`,
+    throw new MavuntaConnectionError(
+      `Mavunta: request failed (${lastError instanceof Error ? lastError.message : String(lastError)}).`,
       { code: 'connection_error' },
     )
   }

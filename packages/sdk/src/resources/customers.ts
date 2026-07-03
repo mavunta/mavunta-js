@@ -1,4 +1,4 @@
-import type { Coinwaka } from '../client.js'
+import type { Mavunta } from '../client.js'
 import type { CreateCustomerParams, Customer, ListResponse, RequestOptions } from '../types.js'
 
 export interface ListCustomersParams {
@@ -8,7 +8,7 @@ export interface ListCustomersParams {
 }
 
 export class CustomersResource {
-  constructor(private readonly client: Coinwaka) {}
+  constructor(private readonly client: Mavunta) {}
 
   create(params: CreateCustomerParams, options: RequestOptions = {}): Promise<Customer> {
     return this.client.request('POST', '/customers', {

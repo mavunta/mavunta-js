@@ -5,8 +5,8 @@ export { verifyWebhook } from './verify.js'
 export type { VerifyWebhookParams } from './verify.js'
 
 /**
- * Webhook helpers, available both as `coinwaka.webhooks` and standalone via the
- * `@coinwaka/sdk/webhooks` subpath (handy when you only need verification and
+ * Webhook helpers, available both as `mavunta.webhooks` and standalone via the
+ * `mavunta/webhooks` subpath (handy when you only need verification and
  * not a full client).
  */
 export class WebhooksResource {
