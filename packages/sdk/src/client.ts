@@ -21,9 +21,18 @@ import { WebhookEventsResource } from './resources/webhook-events.js'
 import { SandboxResource } from './resources/sandbox.js'
 import { WebhooksResource } from './webhooks/index.js'
 
-const DEFAULT_BASE_URL = 'https://api.mavunta.com/v1'
+const LIVE_BASE_URL = 'https://api.mavunta.com/v1'
+const SANDBOX_BASE_URL = 'https://sandbox-api.mavunta.com/v1'
 const API_VERSION = '2026-06-01'
-const SDK_VERSION = '1.0.0'
+const SDK_VERSION = '1.1.0'
+
+// The API enforces the test/live boundary by host: sandbox (cwk_test_) keys
+// live on sandbox-api.mavunta.com, live keys on api.mavunta.com. Deriving the
+// default from the key means the right host is always dialled; `baseUrl`
+// still overrides for self-hosted proxies.
+function defaultBaseUrl(secretKey: string): string {
+  return secretKey.startsWith('cwk_test_') ? SANDBOX_BASE_URL : LIVE_BASE_URL
+}
 
 type HttpMethod = 'GET' | 'POST' | 'DELETE'
 
@@ -90,7 +99,7 @@ export class Mavunta {
       )
     }
     this.secretKey = options.secretKey
-    this.baseUrl = (options.baseUrl ?? DEFAULT_BASE_URL).replace(/\/$/, '')
+    this.baseUrl = (options.baseUrl ?? defaultBaseUrl(options.secretKey)).replace(/\/$/, '')
     this.timeoutMs = options.timeoutMs ?? 30_000
     this.maxRetries = Math.max(0, options.maxRetries ?? 2)
 

@@ -8,7 +8,7 @@ export interface MavuntaOptions {
   secretKey: string
   /** Informational; the key prefix selects test vs live server-side. */
   environment?: MavuntaEnvironment
-  /** Override the API base URL (default `https://api.mavunta.com/v1`). */
+  /** Override the API base URL (default derives from the key: sandbox keys -> `https://sandbox-api.mavunta.com/v1`, live keys -> `https://api.mavunta.com/v1`). */
   baseUrl?: string
   /** Per-request timeout in ms (default 30000). */
   timeoutMs?: number

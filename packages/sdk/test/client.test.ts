@@ -36,6 +36,17 @@ afterEach(() => {
 })
 
 describe('Mavunta client', () => {
+  it('derives the default host from the key environment', async () => {
+    const fn = stubFetch(() => mockResponse(200, { object: 'list', data: [] }))
+    await new Mavunta({ secretKey: 'cwk_test_sk_x' }).paymentIntents.list()
+    expect(String(fn.mock.calls[0]![0])).toContain('https://sandbox-api.mavunta.com/v1/')
+    await new Mavunta({ secretKey: 'cwk_live_sk_x' }).paymentIntents.list()
+    expect(String(fn.mock.calls[1]![0])).toContain('https://api.mavunta.com/v1/')
+    await new Mavunta({ secretKey: 'cwk_test_sk_x', baseUrl: 'https://proxy.example.com/v1' })
+      .paymentIntents.list()
+    expect(String(fn.mock.calls[2]![0])).toContain('https://proxy.example.com/v1/')
+  })
+
   it('rejects a public key', () => {
     expect(() => new Mavunta({ secretKey: 'cwk_test_pk_x' })).toThrow(/public key/i)
   })
@@ -53,7 +64,7 @@ describe('Mavunta client', () => {
 
     expect(intent).toMatchObject({ id: 'pi_1' })
     const [url, init] = fetchMock.mock.calls[0]! as [string, RequestInit]
-    expect(String(url)).toBe('https://api.mavunta.com/v1/payment-intents')
+    expect(String(url)).toBe('https://sandbox-api.mavunta.com/v1/payment-intents')
     expect(init.method).toBe('POST')
     const headers = init.headers as Record<string, string>
     expect(headers.Authorization).toBe(`Bearer ${KEY}`)
@@ -128,6 +139,6 @@ describe('Mavunta client', () => {
     const fetchMock = stubFetch(() => mockResponse(200, { id: 'cus_1', object: 'customer' }))
     const mavunta = new Mavunta({ secretKey: KEY })
     await mavunta.customers.retrieve('cus_1')
-    expect(String(fetchMock.mock.calls[0]![0])).toBe('https://api.mavunta.com/v1/customers/cus_1')
+    expect(String(fetchMock.mock.calls[0]![0])).toBe('https://sandbox-api.mavunta.com/v1/customers/cus_1')
   })
 })

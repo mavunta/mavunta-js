@@ -5,7 +5,14 @@
 import { createHmac, randomBytes } from 'node:crypto'
 
 const VERSION = '1.0.0'
-const BASE = (process.env.MAVUNTA_BASE_URL || 'https://api.mavunta.com/v1').replace(/\/$/, '')
+const LIVE_BASE = 'https://api.mavunta.com/v1'
+const SANDBOX_BASE = 'https://sandbox-api.mavunta.com/v1'
+// Test keys are served on the sandbox host, live keys on the live host; the
+// key in the environment picks the default. MAVUNTA_BASE_URL still overrides.
+const KEY_FOR_BASE = process.env.MAVUNTA_SECRET_KEY || process.env.MAVUNTA_API_KEY || ''
+const BASE = (
+  process.env.MAVUNTA_BASE_URL || (KEY_FOR_BASE.startsWith('cwk_test_') ? SANDBOX_BASE : LIVE_BASE)
+).replace(/\/$/, '')
 const KEY = process.env.MAVUNTA_SECRET_KEY || process.env.MAVUNTA_API_KEY || ''
 
 const HELP = `mavunta — Mavunta Pay CLI (v${VERSION})
@@ -21,7 +28,7 @@ Usage:
 
 Environment:
   MAVUNTA_SECRET_KEY   your cwk_test_… / cwk_live_… key (required)
-  MAVUNTA_BASE_URL     override the API base (default https://api.mavunta.com/v1)`
+  MAVUNTA_BASE_URL     override the API base (default: sandbox-api.mavunta.com for cwk_test_ keys, api.mavunta.com for live)`
 
 function die(msg, code = 1) {
   console.error(msg)

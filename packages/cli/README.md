@@ -39,7 +39,7 @@ mavunta events --limit 20
 | Variable | Purpose |
 | --- | --- |
 | `MAVUNTA_SECRET_KEY` | Your `cwk_test_…` / `cwk_live_…` key (required) |
-| `MAVUNTA_BASE_URL` | Override the API base (default `https://api.mavunta.com/v1`) |
+| `MAVUNTA_BASE_URL` | Override the API base (default: `sandbox-api.mavunta.com/v1` for cwk_test_ keys, `api.mavunta.com/v1` for live) |
 
 Webhooks forwarded by `listen` are signed exactly like production: `Mavunta-Signature` is HMAC-SHA256 (hex) over `` `${Mavunta-Timestamp}.${rawBody}` ``. Verify them with [`@mavunta/sdk`](https://www.npmjs.com/package/@mavunta/sdk)'s `webhooks.verify`.
 
